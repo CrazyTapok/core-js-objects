@@ -146,8 +146,19 @@ function makeImmutable(obj) {
  *    makeWord({ a: [0, 1], b: [2, 3], c: [4, 5] }) => 'aabbcc'
  *    makeWord({ H:[0], e: [1], l: [2, 3, 8], o: [4, 6], W:[5], r:[7], d:[9]}) => 'HelloWorld'
  */
-function makeWord(/* lettersObject */) {
-  throw new Error('Not implemented');
+function makeWord(lettersObject) {
+  const arrSize = Object.values(lettersObject).flat().length;
+  const lettersArr = new Array(arrSize).fill('');
+
+  Object.entries(lettersObject).forEach(([key, value]) => {
+    value.forEach((index) => {
+      lettersArr[index] = key;
+    });
+  });
+
+  const word = lettersArr.join('');
+
+  return word;
 }
 
 /**
@@ -164,8 +175,23 @@ function makeWord(/* lettersObject */) {
  *    sellTickets([25, 25, 50]) => true
  *    sellTickets([25, 100]) => false (The seller does not have enough money to give change.)
  */
-function sellTickets(/* queue */) {
-  throw new Error('Not implemented');
+function sellTickets(queue) {
+  const ticketPrice = 25;
+  let boxOffice = 0;
+
+  for (let i = 0; i < queue.length; i += 1) {
+    if (queue[i] === ticketPrice) {
+      boxOffice += ticketPrice;
+    } else if (queue[i] > ticketPrice) {
+      boxOffice -= queue[i] - ticketPrice;
+    }
+
+    if (boxOffice < 0) {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 /**
@@ -220,8 +246,12 @@ function getJSON(obj) {
  *    const r = fromJSON(Circle.prototype, '{"radius":10}');
  *
  */
-function fromJSON(/* proto, json */) {
-  throw new Error('Not implemented');
+function fromJSON(proto, json) {
+  const obj1 = JSON.parse(json);
+  const obj2 = Object.create(proto);
+  const newObj = Object.assign(obj2, obj1);
+
+  return newObj;
 }
 
 /**
@@ -250,8 +280,30 @@ function fromJSON(/* proto, json */) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
+function sortCitiesArray(arr) {
+  arr.sort((a, b) => {
+    if (a.country > b.country) {
+      return 1;
+    }
+
+    if (a.country < b.country) {
+      return -1;
+    }
+
+    if (a.country === b.country) {
+      if (a.city > b.city) {
+        return 1;
+      }
+
+      if (a.city < b.city) {
+        return -1;
+      }
+    }
+
+    return 0;
+  });
+
+  return arr;
 }
 
 /**
