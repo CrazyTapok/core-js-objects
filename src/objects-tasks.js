@@ -336,8 +336,21 @@ function sortCitiesArray(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
+function group(array, keySelector, valueSelector) {
+  const answer = new Map();
+
+  for (let i = 0; i < array.length; i += 1) {
+    const key = keySelector(array[i]);
+    const value = valueSelector(array[i]);
+
+    if (answer.has(key)) {
+      answer.get(key).push(value);
+    } else {
+      answer.set(key, new Array(value));
+    }
+  }
+
+  return answer;
 }
 
 /**
